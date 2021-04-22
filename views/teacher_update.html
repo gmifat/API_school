@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier enseignant</title>
+</head>
+<body>
+    <form action="/teachers/update" method="post">
+        <label for="teacher_name">Nom</label>
+        <input type="text" id="teacher_name" name="teacher_name" value="{{teacher[1]}}"></br>
+        <label for="teacher_lastName">Prénom</label>
+        <input type="text" id="teacher_lastName" name="teacher_lastName" value="{{teacher[2]}}"></br>
+        <label for="teacher_grade">Grade</label>
+        <input type="text" id="teacher_grade" name="teacher_grade" value="{{teacher[3]}}"></br>
+        <label for="teacher_email">Email</label>
+        <input type="text" id="teacher_email" name="teacher_email" value="{{teacher[4]}}"></br>
+        <label for="teacher_address">Adresse</label>
+        <input type="text" id="teacher_address" name="teacher_address" value="{{teacher[5]}}"></br>
+        <label for="teacher_phone">Téléphone</label>
+        <input type="text" id="teacher_phone" name="teacher_phone" value="{{teacher[6]}}"></br>
+        <input type="hidden" id="teacher_id" name="teacher_id" value="{{ teacher[0] }}">
+        <button type="submit">Modifier</button>
+    </form>
+</body>
+</html>

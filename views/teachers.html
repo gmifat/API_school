@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Enseignants</title>
+    </head>
+    <body>
+        <article>
+            <h2>Enseignants</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Grade</th>
+                        <th>Email</th>
+                        <th>Adresse</th>
+                        <th>Téléphone</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for teacher in teachers %}
+                    <tr>
+                        <td><a href="teachers/{{teacher[0]}}">{{teacher[1]}}</a></td>
+                        <td>{{teacher[2]}}</td>
+                        <td>{{teacher[3]}}</td>
+                        <td>{{teacher[4]}}</td>
+                        <td>{{teacher[5]}}</td>
+                        <td>{{teacher[6]}}</td>
+                        <td><a href="teachers/update/{{teacher[0]}}">Modifier</a></td>
+                        <td><a href="teachers/delete/{{teacher[0]}}">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </article>
+        <h4>Ajouter un nouveau enseignant</h4>
+        <form action="/teachers/add" method="post">
+            <label for="teacher_name">NOM</label>
+            <input type="text" id="teacher_name" name="teacher_name"></br>
+            <label for="teacher_lastName">Prénom</label>
+            <input type="text" id="teacher_lastName" name="teacher_lastName"></br>
+            <label for="teacher_grade">Grade</label>
+            <input type="text" id="teacher_grade" name="teacher_grade"></br>
+            <label for="teacher_email">Email</label>
+            <input type="text" id="teacher_email" name="teacher_email"></br>
+            <label for="teacher_address">Adresse</label>
+            <input type="text" id="teacher_address" name="teacher_address"></br>
+            <label for="teacher_phone">Téléphone</label>
+            <input type="text" id="teacher_phone" name="teacher_phone"></br>
+            <fieldset>
+            {% for subject in subjects %}
+            <div>
+              <input type="checkbox" name="subjects" value="{{subject[0]}}">
+              <label>{{subject[1]}}</label>
+            </div>
+
+            {% endfor %}
+                </fieldset>
+            <button type="submit">Ajouter</button>
+        </form>
+    </body>
+</html>
+
+
+
+

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="/subjects/update" method="post">
+        <input type="hidden" id="subject_id" name="subject_id" value="{{ subject[0] }}">
+        <label for="subject_name">Matière</label>
+        <input type="text" id="subject_name" name="subject_name" value="{{ subject[1] }}">
+        <button type="submit">Modifier</button>
+    </form>
+    <form action="/subjects/delete" method="post">
+        <input type="hidden" id="subject_id" name="subject_id" value="{{ subject[0] }}">
+        <button type="submit">Supprimer</button>
+    </form>
+    <a href="/subjects">Home</a>
+
+</body>
+</html>
