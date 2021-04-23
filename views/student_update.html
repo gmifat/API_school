@@ -6,26 +6,31 @@
 </head>
 <body>
     <form action="/students/update" method="post">
-            <label for="student_name">NOM</label>
-            <input type="text" id="student_name" name="student_name"></br>
-            <label for="student_lastName">Prénom</label>
-            <input type="text" id="student_lastName" name="student_lastName"></br>
-            <label for="student_card">Numéro carte</label>
-            <input type="text" id="student_card" name="student_card"></br>
-            <label for="student_name">Classe</label>
-            <select type="text" id="student_class" name="student_class">
-                {% for class in classes %}
-                <option value="{{class[0]}}">{{class[1]}}</option>
-                {% endfor %}
-            </select>
-                </br>
-            <label for="student_email">Email</label>
-            <input type="text" id="student_email" name="student_email"></br>
-            <label for="student_address">Adresse</label>
-            <input type="text" id="student_address" name="student_address"></br>
-            <label for="student_phone">Téléphone</label>
-            <input type="text" id="student_phone" name="student_phone"></br>
-            <button type="submit">Modifier</button>
+        <label for="student_name">Nom: </label>
+        <input type="text" id="student_name" name="student_name" value="{{student[1]}}"></br>
+        <label for="student_lastName">Prénom: </label>
+        <input type="text" id="student_lastName" name="student_lastName" value="{{student[2]}}"></br>
+        <label for="student_card">Numéro carte: </label>
+        <input type="text" id="student_card" name="student_card" value="{{student[3]}}"></br>
+        <label for="student_name">Classe: </label>
+        <select type="text" id="student_class" name="student_class" value="{{student[4]}}">
+            {% for class in classes %}
+                {% if (class[0] == student[8]) %}
+                    <option selected value="{{class[0]}}">{{class[1]}}</option>
+                {% else %}
+                    <option value="{{class[0]}}">{{class[1]}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+            </br>
+        <label for="student_email">Email: </label>
+        <input type="text" id="student_email" name="student_email" value="{{student[5]}}"></br>
+        <label for="student_address">Adresse: </label>
+        <input type="text" id="student_address" name="student_address" value="{{student[6]}}"></br>
+        <label for="student_phone">Téléphone: </label>
+        <input type="text" id="student_phone" name="student_phone" value="{{student[7]}}"></br>
+        <input type="hidden" id="student_id" name="student_id" value="{{ student[0] }}">
+        <button type="submit">Valider</button>
         </form>
 </body>
 </html>

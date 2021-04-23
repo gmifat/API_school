@@ -6,17 +6,17 @@
 </head>
 <body>
      <form action="/admins/update" method="post">
-            <label for="admin_name">NOM</label>
+            <label for="admin_name">Nom: </label>
             <input type="text" id="admin_name" name="admin_name" value="{{admin[1]}}"></br>
-            <label for="admin_lastName">Prénom</label>
+            <label for="admin_lastName">Prénom: </label>
             <input type="text" id="admin_lastName" name="admin_lastName" value="{{admin[2]}}"></br>
-            <label for="admin_role">Grade</label>
+            <label for="admin_role">Grade: </label>
             <input type="text" id="admin_role" name="admin_role" value="{{admin[3]}}"></br>
-            <label for="admin_email">Email</label>
+            <label for="admin_email">Email: </label>
             <input type="text" id="admin_email" name="admin_email" value="{{admin[4]}}"></br>
-            <label for="admin_address">Adresse</label>
+            <label for="admin_address">Adresse: </label>
             <input type="text" id="admin_address" name="admin_address" value="{{admin[5]}}"></br>
-            <label for="admin_phone">Téléphone</label>
+            <label for="admin_phone">Téléphone: </label>
             <input type="text" id="admin_phone" name="admin_phone" value="{{admin[6]}}"></br>
             <input type="hidden" id="admin_id" name="admin_id" value="{{ admin[0] }}">
             <button type="submit">Modifier</button>
