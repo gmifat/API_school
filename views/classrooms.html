@@ -14,31 +14,6 @@
                 <button type="submit">Ajouter</button>
             </form>
         </article>
-        <a href="/">Home</a>
 {% endblock %}
 
 
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Les salles</title>
-</head>
-<body>
-    <article>
-            <h2>Les salles</h2>
-            <div>
-                {% for classroom in classrooms %}
-                    <div><a href="/classrooms/{{ classroom[0] }}">{{ classroom[1] }}</a></div>
-                {% endfor %}
-            </div>
-            <form action="/classrooms/add" method="post">
-                <label for="classroom_name">Salle</label>
-                <input type="text" id="classroom_name" name="classroom_name">
-                <button type="submit">Ajouter</button>
-            </form>
-        </article>
-        <a href="/">Home</a>
-</body>
-</html>

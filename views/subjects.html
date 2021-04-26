@@ -14,40 +14,6 @@
                 <button type="submit">Ajouter</button>
             </form>
         </article>
-        <a href="/">Home</a>
 {% endblock %}
 
 
-
-
-
-
-
-
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>Subjects</title>
-</head>
-    <body>
-        <article>
-            <h2>Matières</h2>
-            <div>
-                {% for subject in subjects %}
-                <div><a href="/subjects/{{ subject[0] }}">{{ subject[1] }}</a></div>
-                {% endfor %}
-            </div>
-            <form action="/subjects/add" method="post">
-                <label for="subject_name">Matière</label>
-                <input type="text" id="subject_name" name="subject_name">
-                <button type="submit">Ajouter</button>
-            </form>
-        </article>
-        <a href="/">Home</a>
-    </body>
-</html>

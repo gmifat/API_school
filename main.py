@@ -359,6 +359,21 @@ def add_class():
     school_cursor.close()
     return redirect("/classes")
 
+
+@app.route('/classes/update', methods=['POST'])
+def update_class():
+    student_class = request.form['class_name']
+    cl_id = request.form['class_id']
+    school_cursor = school_db.cursor()
+    class_data = {'name': student_class, 'id': cl_id}
+    school_cursor.execute("update class set class_name = %(name)s where class_id = %(id)s", class_data)
+    school_db.commit()
+    school_cursor.close()
+    return redirect("/classes")
+
+
+
+
 ########classroom
 
 
