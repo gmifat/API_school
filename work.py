@@ -1,3 +1,43 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 list = [(1, 's'), (2, 'f'), (3, 'l')]
 #print(list)
 for item in list:
@@ -23,3 +63,4 @@ def get_all_student():
     result = school_cursor.fetchall()
     school_cursor.close()
     return render_template('students.html', students=result)
+

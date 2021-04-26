@@ -1,4 +1,92 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block title_page %}Enseignants{% endblock %}
+{% block title_main %}Enseignants{% endblock %}
+{% block content%}
+    <article>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Grade</th>
+                        <th>Email</th>
+                        <th>Adresse</th>
+                        <th>Téléphone</th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for teacher in teachers %}
+                    <tr>
+                        <td><a href="teachers/{{teacher[0]}}">{{teacher[1]}}</a></td>
+                        <td>{{teacher[2]}}</td>
+                        <td>{{teacher[3]}}</td>
+                        <td>{{teacher[4]}}</td>
+                        <td>{{teacher[5]}}</td>
+                        <td>{{teacher[6]}}</td>
+                        <td><a href="teachers/update/{{teacher[0]}}">Modifier</a></td>
+                        <td><a href="teachers/delete/{{teacher[0]}}">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </article>
+        <h4>Ajouter un nouveau enseignant</h4>
+        <form class="row g-3 needs-validation"  action="/teachers/add" method="post">
+            <div class="col-md-4">
+                <label class="form-label" for="teacher_name">NOM</label>
+                <input class="form-control" type="text" id="teacher_name" name="teacher_name"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="teacher_lastName">Prénom</label>
+                <input class="form-control" type="text" id="teacher_lastName" name="teacher_lastName"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="teacher_grade">Grade</label>
+                <input class="form-control" type="text" id="teacher_grade" name="teacher_grade"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="teacher_email">Email</label>
+                <input class="form-control" type="text" id="teacher_email" name="teacher_email"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="teacher_address">Adresse</label>
+                <input class="form-control" type="text" id="teacher_address" name="teacher_address"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="teacher_phone">Téléphone</label>
+                <input class="form-control" type="text" id="teacher_phone" name="teacher_phone"></br>
+            </div>
+            <fieldset>
+                {% for subject in subjects %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="subjects" value="{{subject[0]}}">
+                      <label class="form-check-label">{{subject[1]}}</label>
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </div>
+        </form>
+        <a href="/">Home</a>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>
 <html lang="fr">
     <head>
         <meta charset="UTF-8">

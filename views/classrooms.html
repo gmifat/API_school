@@ -1,4 +1,25 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block title_page %}Les salles{% endblock %}
+{% block title_main %}Les salles{% endblock %}
+{% block content%}
+    <article>
+            <div>
+                {% for classroom in classrooms %}
+                    <div><a href="/classrooms/{{ classroom[0] }}">{{ classroom[1] }}</a></div>
+                {% endfor %}
+            </div>
+            <form action="/classrooms/add" method="post">
+                <label for="classroom_name">Salle</label>
+                <input type="text" id="classroom_name" name="classroom_name">
+                <button type="submit">Ajouter</button>
+            </form>
+        </article>
+        <a href="/">Home</a>
+{% endblock %}
+
+
+
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

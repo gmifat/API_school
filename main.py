@@ -11,13 +11,9 @@ school_db = mysql.connector.connect(
 
 
 @app.route('/')
-def hello_world():
+def host_api():
     return 'API School'
 
-
-@app.route('/test', methods=['GET'])
-def test():
-    return "toto"
 
 
 ########subject
