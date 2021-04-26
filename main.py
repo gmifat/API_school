@@ -10,11 +10,9 @@ school_db = mysql.connector.connect(
     database="school")
 
 
-
 @app.route('/')
 def hello_world():
-    return 'app school'
-
+    return 'API School'
 
 
 @app.route('/test', methods=['GET'])
@@ -32,7 +30,6 @@ def get_all_subjects():
     result = school_cursor.fetchall()
     school_cursor.close()
     return render_template('subjects.html', subjects=result)
-
 
 
 @app.route('/subjects/<subject_id>', methods=['GET'])
@@ -95,12 +92,15 @@ def get_all_teachers():
 @app.route('/teachers/<teacher_id>', methods=['GET'])
 def get_teacher(teacher_id):
     school_cursor = school_db.cursor()
-    school_cursor.execute("select teacher_id, first_name, last_name, grade, email, address, phone from teacher"
-                          " where teacher_id = %(s_id)s",
+    school_cursor.execute("select tc.teacher_id, tc.first_name, tc.last_name, tc.grade, tc.email, tc.address,"
+                          " tc.phone, sb.subject_id, sb.subject_name from teacher tc"
+                          " left join speciality on speciality.teacher_id = tc.teacher_id"
+                          " left join subject sb on speciality.subject_id = sb.subject_id"
+                          " where tc.teacher_id = %(s_id)s",
                           {'s_id': teacher_id})
     result = school_cursor.fetchall()
     school_cursor.close()
-    return render_template('teacher.html', teacher=result[0])
+    return render_template('teacher.html', teacher=result[0], teacher_details=result)
 
 
 @app.route('/teachers/add', methods=['POST'])
@@ -128,12 +128,17 @@ def add_teacher():
 @app.route('/teachers/update/<teacher_id>', methods=['GET'])
 def get_teacher_to_update(teacher_id):
     school_cursor = school_db.cursor()
+    school_cursor.execute("select subject.subject_id, subject.subject_name, speciality.teacher_id from subject"
+                          " left join speciality on speciality.subject_id = subject.subject_id"
+                          " where speciality.teacher_id is null or speciality.teacher_id = %(t_id)s",
+                          {'t_id': teacher_id})
+    subjects = school_cursor.fetchall()
     school_cursor.execute("select teacher_id, first_name, last_name, grade, email, address, phone from teacher"
-                          " where teacher_id = %(s_id)s",
-                          {'s_id': teacher_id})
+                          " where teacher_id = %(t_id)s",
+                          {'t_id': teacher_id})
     result = school_cursor.fetchall()
     school_cursor.close()
-    return render_template('teacher_update.html', teacher=result[0])
+    return render_template('teacher_update.html', teacher=result[0], subjects=subjects)
 
 
 @app.route('/teachers/update', methods=['POST'])
@@ -158,12 +163,14 @@ def update_teacher():
 @app.route('/teachers/delete/<teacher_id>', methods=['GET'])
 def get_teacher_to_delete(teacher_id):
     school_cursor = school_db.cursor()
+    school_cursor.execute("select subject_id, subject_name from subject")
+    subjects = school_cursor.fetchall()
     school_cursor.execute("select teacher_id, first_name, last_name, grade, email, address, phone from teacher"
                           " where teacher_id = %(s_id)s",
                           {'s_id': teacher_id})
     result = school_cursor.fetchall()
     school_cursor.close()
-    return render_template('delete.html', teacher=result[0])
+    return render_template('delete.html', teacher=result[0], subjects = subjects)
 
 
 @app.route('/teachers/delete', methods=['POST'])
@@ -182,10 +189,10 @@ def delete_teacher():
 @app.route('/students', methods=['GET'])
 def get_all_students():
     school_cursor = school_db.cursor()
-    school_cursor.execute("select class_id, name from class")
+    school_cursor.execute("select class_id, class_name from class")
     classes = school_cursor.fetchall()
     school_cursor.execute("select student.student_id, student.first_name, student.last_name, student.card_number,"
-                          " class.name, student.email, student.address, student.phone from student"
+                          " class.class_name, student.email, student.address, student.phone from student"
                           " join class on class.class_id = student.class_id")
     result = school_cursor.fetchall()
     school_cursor.close()
@@ -196,7 +203,7 @@ def get_all_students():
 def get_student(student_id):
     school_cursor = school_db.cursor()
     school_cursor.execute("select student.student_id, student.first_name, student.last_name, student.card_number,"
-                          " class.name, student.email, student.address, student.phone from student"
+                          " class.class_name, student.email, student.address, student.phone from student"
                           " join class on class.class_id = student.class_id"
                           " where student_id = %(st_id)s", {'st_id': student_id})
     result = school_cursor.fetchall()
@@ -224,10 +231,11 @@ def add_student():
 @app.route('/students/update/<student_id>', methods=['GET'])
 def get_student_to_update(student_id):
     school_cursor = school_db.cursor()
-    school_cursor.execute("select class_id, name from class")
+    school_cursor.execute("select class_id, class_name from class")
     classes = school_cursor.fetchall()
     school_cursor.execute("select student.student_id, student.first_name, student.last_name, student.card_number,"
-                          " class.name, student.email, student.address, student.phone, class.class_id from student"
+                          " class.class_name, student.email, student.address, student.phone, class.class_id"
+                          " from student"
                           " join class on class.class_id = student.class_id"
                           " where student_id = %(st_id)s", {'st_id': student_id})
     result = school_cursor.fetchall()
@@ -322,6 +330,69 @@ def update_admin():
     school_db.commit()
     school_cursor.close()
     return redirect("/admins")
+
+
+########class
+
+
+@app.route('/classes', methods=['GET'])
+def get_all_classes():
+    school_cursor = school_db.cursor()
+    school_cursor.execute("select class_id, class_name from class")
+    result = school_cursor.fetchall()
+    school_cursor.close()
+    return render_template('classes.html', classes=result)
+
+
+@app.route('/classes/<class_id>', methods=['GET'])
+def get_class(class_id):
+    school_cursor = school_db.cursor()
+    school_cursor.execute("select class_id, class_name from class where class_id = %(s_id)s",
+                          {'s_id': class_id})
+    result = school_cursor.fetchall()
+    school_cursor.close()
+    return render_template('class_view.html', classes=result[0])
+
+
+@app.route('/classes/add', methods=['POST'])
+def add_class():
+    name = request.form['class_name']
+    school_cursor = school_db.cursor()
+    school_cursor.execute("insert into class (class_name) values (%(name)s)", {'name': name})
+    school_db.commit()
+    school_cursor.close()
+    return redirect("/classes")
+
+########classroom
+
+
+@app.route('/classrooms', methods=['GET'])
+def get_all_classrooms():
+    school_cursor = school_db.cursor()
+    school_cursor.execute("select classroom_id, room_number from classroom")
+    classrooms = school_cursor.fetchall()
+    school_cursor.close()
+    return render_template('classrooms.html', classrooms=classrooms)
+
+
+@app.route('/classrooms/<classroom_id>', methods=['GET'])
+def get_classroom(classroom_id):
+    school_cursor = school_db.cursor()
+    school_cursor.execute("select classroom_id, room_number from classroom where classroom_id = %(s_id)s",
+                          {'s_id': classroom_id})
+    result = school_cursor.fetchall()
+    school_cursor.close()
+    return render_template('classroom.html', classroom=result[0])
+
+
+@app.route('/classrooms/add', methods=['POST'])
+def add_classroom():
+    room_number = request.form['classroom_name']
+    school_cursor = school_db.cursor()
+    school_cursor.execute("insert into classroom (room_number) values (%(name)s)", {'name': room_number})
+    school_db.commit()
+    school_cursor.close()
+    return redirect("/classrooms")
 
 
 app.run(debug=True)

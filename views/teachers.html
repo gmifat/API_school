@@ -51,16 +51,16 @@
             <label for="teacher_phone">Téléphone</label>
             <input type="text" id="teacher_phone" name="teacher_phone"></br>
             <fieldset>
-            {% for subject in subjects %}
-            <div>
-              <input type="checkbox" name="subjects" value="{{subject[0]}}">
-              <label>{{subject[1]}}</label>
-            </div>
-
-            {% endfor %}
-                </fieldset>
+                {% for subject in subjects %}
+                    <div>
+                      <input type="checkbox" name="subjects" value="{{subject[0]}}">
+                      <label>{{subject[1]}}</label>
+                    </div>
+                {% endfor %}
+            </fieldset>
             <button type="submit">Ajouter</button>
         </form>
+        <a href="/">Home</a>
     </body>
 </html>
 

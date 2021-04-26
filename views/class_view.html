@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Classe</title>
+</head>
+    <body>
+        <form action="/classes" method="post">
+            <input type="hidden" id="class_id" name="class_id" value="{{ classes[0] }}">
+            <label for="class_name">Classe</label>
+            <input type="text" id="class_name" name="class_name" value="{{ classes[1] }}">
+            <button type="submit">Modifier</button>
+        </form>
+        <form action="/classes/delete" method="post">
+            <input type="hidden" id="class_id" name="class_id" value="{{ classes[0] }}">
+            <button type="submit">Supprimer</button>
+        </form>
+        <a href="/">Home</a>
+    </body>
+</html>

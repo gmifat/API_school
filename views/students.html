@@ -4,62 +4,63 @@
     <meta charset="UTF-8">
     <title>Étudiants</title>
 </head>
-<body>
-    <article>
-            <h2>Étudiants</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Numéro Carte</th>
-                        <th>Classe</th>
-                        <th>Email</th>
-                        <th>Adresse</th>
-                        <th>Téléphone</th>
-                        <th>Modifier</th>
-                        <th>Supprimer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for student in students %}
-                    <tr>
-                        <td><a href="students/{{student[0]}}">{{student[1]}}</a></td>
-                        <td>{{student[2]}}</td>
-                        <td>{{student[3]}}</td>
-                        <td>{{student[4]}}</td>
-                        <td>{{student[5]}}</td>
-                        <td>{{student[6]}}</td>
-                        <td>{{student[7]}}</td>
-                        <td><a href="students/update/{{student[0]}}">Modifier</a></td>
-                        <td><a href="students/delete/{{student[0]}}">Supprimer</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </article>
-        <h4>Ajouter un nouveau étudiant</h4>
-        <form action="/students/add" method="post">
-            <label for="student_name">NOM</label>
-            <input type="text" id="student_name" name="student_name"></br>
-            <label for="student_lastName">Prénom</label>
-            <input type="text" id="student_lastName" name="student_lastName"></br>
-            <label for="student_card">Numéro carte</label>
-            <input type="text" id="student_card" name="student_card"></br>
-            <label for="student_name">Classe</label>
-            <select type="text" id="student_class" name="student_class">
-                {% for class in classes %}
-                <option value="{{class[0]}}">{{class[1]}}</option>
-                {% endfor %}
-            </select>
-                </br>
-            <label for="student_email">Email</label>
-            <input type="text" id="student_email" name="student_email"></br>
-            <label for="student_address">Adresse</label>
-            <input type="text" id="student_address" name="student_address"></br>
-            <label for="student_phone">Téléphone</label>
-            <input type="text" id="student_phone" name="student_phone"></br>
-            <button type="submit">Ajouter</button>
-        </form>
-</body>
+    <body>
+        <article>
+                <h2>Étudiants</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Numéro Carte</th>
+                            <th>Classe</th>
+                            <th>Email</th>
+                            <th>Adresse</th>
+                            <th>Téléphone</th>
+                            <th>Modifier</th>
+                            <th>Supprimer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for student in students %}
+                        <tr>
+                            <td><a href="students/{{student[0]}}">{{student[1]}}</a></td>
+                            <td>{{student[2]}}</td>
+                            <td>{{student[3]}}</td>
+                            <td>{{student[4]}}</td>
+                            <td>{{student[5]}}</td>
+                            <td>{{student[6]}}</td>
+                            <td>{{student[7]}}</td>
+                            <td><a href="students/update/{{student[0]}}">Modifier</a></td>
+                            <td><a href="students/delete/{{student[0]}}">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </article>
+            <h4>Ajouter un nouveau étudiant</h4>
+            <form action="/students/add" method="post">
+                <label for="student_name">NOM</label>
+                <input type="text" id="student_name" name="student_name"></br>
+                <label for="student_lastName">Prénom</label>
+                <input type="text" id="student_lastName" name="student_lastName"></br>
+                <label for="student_card">Numéro carte</label>
+                <input type="text" id="student_card" name="student_card"></br>
+                <label for="student_name">Classe</label>
+                <select type="text" id="student_class" name="student_class">
+                    {% for class in classes %}
+                    <option value="{{class[0]}}">{{class[1]}}</option>
+                    {% endfor %}
+                </select>
+                    </br>
+                <label for="student_email">Email</label>
+                <input type="text" id="student_email" name="student_email"></br>
+                <label for="student_address">Adresse</label>
+                <input type="text" id="student_address" name="student_address"></br>
+                <label for="student_phone">Téléphone</label>
+                <input type="text" id="student_phone" name="student_phone"></br>
+                <button type="submit">Ajouter</button>
+            </form>
+            <a href="/">Home</a>
+    </body>
 </html>

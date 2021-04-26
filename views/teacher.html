@@ -30,11 +30,21 @@
             <div>
                 <span class="detail_title">Téléphone :</span>
                 <span class="detail_value">{{teacher[6]}}</span>
+            </div><hr>
+            <div>
+                <h4>Matière</h4>
+                <ul>
+                    {% for teacher_detail in teacher_details %}
+                        {% if teacher_detail[7] is not none : %}
+                            <li>{{teacher_detail[8]}}</li>
+                        {% endif%}
+                    {% endfor %}
+                </ul>
             </div>
             <div>
-                <a href="teachers/update">Modifier</a>
+                <a href="update/{{teacher[0]}}">Modifier</a>
             </div>
-            <a href="/teachers">Home</a>
+            <a href="/">Home</a>
         </article>
     </body>
 </html>
