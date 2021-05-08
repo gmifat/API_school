@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Enseignant</title>
-    </head>
-    <body>
+{% extends 'base.html' %}
+{% block title_page %}Enseignant{% endblock %}
+{% block title_main %}Enseignant{% endblock %}
+{% block content%}
         <article>
-            <h2>Enseignant</h2>
             <div>
                 <span class="detail_title">Nom :</span>
                 <span class="detail_value">{{teacher[1]}}</span>
@@ -42,9 +38,7 @@
                 </ul>
             </div>
             <div>
-                <a href="update/{{teacher[0]}}">Modifier</a>
+                <a class="btn btn-primary"  href="update/{{teacher[0]}}">Modifier</a>
             </div>
-            <a href="/">Home</a>
         </article>
-    </body>
-</html>
+{% endblock %}

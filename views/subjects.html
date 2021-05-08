@@ -3,17 +3,22 @@
 {% block title_main %}Matières{% endblock %}
 {% block content%}
     <article>
-            <div>
-                {% for subject in subjects %}
-                <div><a href="/subjects/{{ subject[0] }}">{{ subject[1] }}</a></div>
-                {% endfor %}
+        <div>
+            {% for subject in subjects %}
+            <div><a href="/subjects/{{ subject[0] }}">{{ subject[1] }}</a></div>
+            {% endfor %}
+        </div>
+        <hr>
+        <form class="row g-3 needs-validation" action="/subjects/add" method="post">
+            <div class="col-md-4">
+                <label class="form-label" for="subject_name">Matière</label>
+                <input class="form-control" type="text" id="subject_name" name="subject_name">
             </div>
-            <form action="/subjects/add" method="post">
-                <label for="subject_name">Matière</label>
-                <input type="text" id="subject_name" name="subject_name">
-                <button type="submit">Ajouter</button>
-            </form>
-        </article>
+            <div class="col-md-12">
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </div>
+        </form>
+    </article>
 {% endblock %}
 
 

@@ -1,20 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Classe</title>
-</head>
-    <body>
-        <form action="/classes/update" method="post">
-            <input type="hidden" id="class_id" name="class_id" value="{{ classes[0] }}">
-            <label for="class_name">Classe</label>
-            <input type="text" id="class_name" name="class_name" value="{{ classes[1] }}">
-            <button type="submit">Modifier</button>
-        </form>
-        <form action="/classes/delete" method="post">
-            <input type="hidden" id="class_id" name="class_id" value="{{ classes[0] }}">
-            <button type="submit">Supprimer</button>
-        </form>
-        <a href="/">Home</a>
-    </body>
-</html>
+{% extends 'base.html' %}
+{% block title_page %}Les classe{% endblock %}
+{% block title_main %}Les classe{% endblock %}
+{% block content%}
+    <form class="row g-3 needs-validation" action="/classes/update" method="post">
+        <input type="hidden" id="class_id" name="class_id" value="{{ classes[0] }}">
+        <div class="col-md-4">
+            <label class="form-label" for="class_name">Classe</label>
+            <input class="form-control" type="text" id="class_name" name="class_name" value="{{ classes[1] }}">
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Modifier</button>
+        </div>
+    </form>
+    </br>
+    <form class="row g-3 needs-validation" action="/classes/delete" method="post">
+        <input type="hidden" id="class_id" name="class_id" value="{{ classes[0] }}">
+        <div class="col-12">
+            <button class="btn btn-danger" type="submit">Supprimer</button>
+        </div>
+    </form>
+{% endblock %}

@@ -36,28 +36,42 @@
     </article>
     <article>
         <h4>Ajouter un nouveau étudiant</h4>
-        <form action="/students/add" method="post">
-            <label for="student_name">NOM</label>
-            <input type="text" id="student_name" name="student_name"></br>
-            <label for="student_lastName">Prénom</label>
-            <input type="text" id="student_lastName" name="student_lastName"></br>
-            <label for="student_card">Numéro carte</label>
-            <input type="text" id="student_card" name="student_card"></br>
-            <label for="student_name">Classe</label>
-            <select type="text" id="student_class" name="student_class">
-                {% for class in classes %}
-                <option value="{{class[0]}}">{{class[1]}}</option>
-                {% endfor %}
-            </select>
-                </br>
-            <label for="student_email">Email</label>
-            <input type="text" id="student_email" name="student_email"></br>
-            <label for="student_address">Adresse</label>
-            <input type="text" id="student_address" name="student_address"></br>
-            <label for="student_phone">Téléphone</label>
-            <input type="text" id="student_phone" name="student_phone"></br>
-            <button type="submit">Ajouter</button>
+        <form class="row g-3 needs-validation" action="/students/add" method="post">
+            <div class="col-md-4">
+                <label class="form-label" for="student_name">NOM</label>
+                <input class="form-control" type="text" id="student_name" name="student_name"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="student_lastName">Prénom</label>
+                <input class="form-control" type="text" id="student_lastName" name="student_lastName"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="student_card">Numéro carte</label>
+                <input class="form-control" type="text" id="student_card" name="student_card"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="student_email">Email</label>
+                <input class="form-control" type="text" id="student_email" name="student_email"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="student_address">Adresse</label>
+                <input class="form-control" type="text" id="student_address" name="student_address"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="student_phone">Téléphone</label>
+                <input class="form-control" type="text" id="student_phone" name="student_phone"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="student_name">Classe</label>
+                <select class="custom-select" type="text" id="student_class" name="student_class">
+                    {% for class in classes %}
+                    <option value="{{class[0]}}">{{class[1]}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </div>
         </form>
     </article>
-    <a href="/">Home</a>
 {% endblock %}

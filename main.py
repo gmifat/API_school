@@ -12,8 +12,7 @@ school_db = mysql.connector.connect(
 
 @app.route('/')
 def host_api():
-    return 'API School'
-
+    return render_template('home.html')
 
 
 ########subject
@@ -166,7 +165,7 @@ def get_teacher_to_delete(teacher_id):
                           {'s_id': teacher_id})
     result = school_cursor.fetchall()
     school_cursor.close()
-    return render_template('delete.html', teacher=result[0], subjects = subjects)
+    return render_template('teacher_delete.html', teacher=result[0], subjects = subjects)
 
 
 @app.route('/teachers/delete', methods=['POST'])
@@ -370,8 +369,6 @@ def update_class():
     school_db.commit()
     school_cursor.close()
     return redirect("/classes")
-
-
 
 
 ########classroom

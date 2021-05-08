@@ -1,40 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Modifier enseignant</title>
-</head>
-<body>
-    <form action="/teachers/update" method="post">
-        <label for="teacher_name">Nom</label>
-        <input type="text" id="teacher_name" name="teacher_name" value="{{teacher[1]}}"></br>
-        <label for="teacher_lastName">Prénom</label>
-        <input type="text" id="teacher_lastName" name="teacher_lastName" value="{{teacher[2]}}"></br>
-        <label for="teacher_grade">Grade</label>
-        <input type="text" id="teacher_grade" name="teacher_grade" value="{{teacher[3]}}"></br>
-        <label for="teacher_email">Email</label>
-        <input type="text" id="teacher_email" name="teacher_email" value="{{teacher[4]}}"></br>
-        <label for="teacher_address">Adresse</label>
-        <input type="text" id="teacher_address" name="teacher_address" value="{{teacher[5]}}"></br>
-        <label for="teacher_phone">Téléphone</label>
-        <input type="text" id="teacher_phone" name="teacher_phone" value="{{teacher[6]}}"></br>
-        <input type="hidden" id="teacher_id" name="teacher_id" value="{{ teacher[0] }}">
-        <fieldset>
-            {% for subject in subjects %}
-                {% if subject[2] is not none : %}
-                    <div>
-                      <input checked type="checkbox" name="subjects" value="{{subject[0]}}">
-                      <label>{{subject[1]}}</label>
-                    </div>
-                {% else %}
-                    <div>
-                      <input type="checkbox" name="subjects" value="{{subject[0]}}">
-                      <label>{{subject[1]}}</label>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </fieldset>
-        <button type="submit">Valider</button>
+{% extends 'base.html' %}
+{% block title_page %}Enseignant{% endblock %}
+{% block title_main %}Enseignant{% endblock %}
+{% block content%}
+    <form class="row g-3 needs-validation" action="/teachers/update" method="post">
+        <div class="col-md-4">
+            <label class="form-label" for="teacher_name">Nom</label>
+            <input class="form-control" type="text" id="teacher_name" name="teacher_name" value="{{teacher[1]}}"></br>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="teacher_lastName">Prénom</label>
+            <input class="form-control" type="text" id="teacher_lastName" name="teacher_lastName" value="{{teacher[2]}}"></br>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="teacher_grade">Grade</label>
+            <input class="form-control" type="text" id="teacher_grade" name="teacher_grade" value="{{teacher[3]}}"></br>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="teacher_email">Email</label>
+            <input class="form-control" type="text" id="teacher_email" name="teacher_email" value="{{teacher[4]}}"></br>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label" for="teacher_address">Adresse</label>
+            <input class="form-control" type="text" id="teacher_address" name="teacher_address" value="{{teacher[5]}}"></br>
+        </div>
+        <div class="col-md-4">
+            <label  class="form-label"for="teacher_phone">Téléphone</label>
+            <input class="form-control" type="text" id="teacher_phone" name="teacher_phone" value="{{teacher[6]}}"></br>
+        </div>
+            <input type="hidden" id="teacher_id" name="teacher_id" value="{{ teacher[0] }}">
+            <fieldset>
+                {% for subject in subjects %}
+                    {% if subject[2] is not none : %}
+                        <div>
+                          <input checked type="checkbox" name="subjects" value="{{subject[0]}}">
+                          <label>{{subject[1]}}</label>
+                        </div>
+                    {% else %}
+                        <div>
+                          <input type="checkbox" name="subjects" value="{{subject[0]}}">
+                          <label>{{subject[1]}}</label>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </fieldset>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Valider</button>
+        </div>
     </form>
-</body>
-</html>
+{% endblock %}
