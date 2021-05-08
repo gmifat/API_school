@@ -3,21 +3,22 @@
 {% block title_main %}Les classes{% endblock %}
 {% block content%}
     <article>
-            <div>
-                {% for class in classes %}
-                    <div><a href="/classes/{{ class[0] }}">{{ class[1] }}</a></div>
-                {% endfor %}
+        <div>
+            {% for class in classes %}
+                <div><a href="/classes/{{ class[0] }}">{{ class[1] }}</a></div>
+            {% endfor %}
+        </div>
+        <hr>
+        <form class="row g-3 needs-validation" action="/classes/add" method="post">
+            <div class="col-md-4">
+                <label class="form-label" for="class_name">Ajouter une Classe</label>
+                <input class="form-control" type="text" id="class_name" name="class_name">
             </div>
-            <form class="row g-3 needs-validation" action="/classes/add" method="post">
-                <div class="col-md-4">
-                    <label class="form-label" for="class_name">Classe</label>
-                    <input class="form-control" type="text" id="class_name" name="class_name">
-                </div>
-                <div class="col-12">
-                    <button class="btn btn-primary" type="submit">Ajouter</button>
-                </div>
-            </form>
-        </article>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </div>
+        </form>
+    </article>
 {% endblock %}
 
 
