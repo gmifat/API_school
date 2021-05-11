@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title_page %}Modifier une salle{% endblock %}
+{% block title_main %}Modifier une salle{% endblock %}
+{% block content%}
+    <form class="row g-3 needs-validation" action="/classrooms/update" method="post">
+        <input type="hidden" id="classroom_id" name="classroom_id" value="{{ classroom[0] }}">
+        <div class="col-md-4">
+            <label class="form-label" for="classroom_name">Salle</label>
+            <input class="form-control" type="text" id="classroom_name" name="classroom_name" value="{{ classroom[1] }}">
+        </div>
+        <hr>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Valider</button>
+        </div>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title_page %}Modifier une matière{% endblock %}
+{% block title_main %}Modifier une matière{% endblock %}
+{% block content%}
+    <form class="row g-3 needs-validation" action="/subjects/update" method="post">
+        <input type="hidden" id="subject_id" name="subject_id" value="{{ subject[0] }}">
+        <div class="col-md-4">
+            <label class="form-label" for="subject_name">Classe</label>
+            <input class="form-control" type="text" id="subject_name" name="subject_name" value="{{ subject[1] }}">
+        </div>
+        <hr>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Valider</button>
+        </div>
+    </form>
+
+{% endblock %}

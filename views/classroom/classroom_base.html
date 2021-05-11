@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title_page %}Salles{% endblock %}
+{% block title_main %}Salles{% endblock %}
+{% block content%}
+    <article>
+    <div>
+        <span class="detail_title">Nom :</span>
+        <span class="detail_value">{{classroom[1]}}</span>
+    </div>
+    <hr>
+    {% block actions %}
+    {% endblock %}
+</article>
+{% endblock %}

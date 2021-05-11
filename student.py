@@ -10,7 +10,7 @@ def get_all_students():
     classes = school_cursor.fetchall()
     school_cursor.execute("select student.student_id, student.first_name, student.last_name, student.card_number,"
                           " class.class_name, student.email, student.address, student.phone from student"
-                          " join class on class.class_id = student.class_id")
+                          " join class on class.class_id = student.class_id order by last_name")
     result = school_cursor.fetchall()
     school_cursor.close()
     return render_template('student/students.html', classes=classes, students=result)

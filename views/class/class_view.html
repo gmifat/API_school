@@ -1,23 +1,12 @@
-{% extends 'base.html' %}
-{% block title_page %}Les classe{% endblock %}
-{% block title_main %}Les classe{% endblock %}
-{% block content%}
-    <form class="row g-3 needs-validation" action="/classes/update" method="post">
-        <input type="hidden" id="class_id" name="class_id" value="{{ classes[0] }}">
-        <div class="col-md-4">
-            <label class="form-label" for="class_name">Classe</label>
-            <input class="form-control" type="text" id="class_name" name="class_name" value="{{ classes[1] }}">
-        </div>
-        <hr>
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">Modifier</button>
-        </div>
-    </form>
-    </br>
-    <form class="row g-3 needs-validation" action="/classes/delete" method="post">
-        <input type="hidden" id="class_id" name="class_id" value="{{ classes[0] }}">
-        <div class="col-12">
-            <button class="btn btn-danger" type="submit">Supprimer</button>
-        </div>
-    </form>
+{% extends 'class/class_base.html' %}
+{% block title_page %}Classe{% endblock %}
+{% block title_main %}Classe{% endblock %}
+{% block actions %}
+    <div>
+        <a class="btn btn-primary"  href="update/{{classes[0]}}">Modifier</a>
+        <a class="btn btn-danger"  href="delete/{{classes[0]}}">Supprimer</a>
+    </div>
 {% endblock %}
+
+
+

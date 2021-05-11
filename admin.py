@@ -26,11 +26,6 @@ def get_admin(admin_id):
     return get_admin_details(admin_id, 'admin/admin.html')
 
 
-@app.route('/admins/delete/<admin_id>', methods=['GET'])
-def get_admin_for_delete(admin_id):
-    return get_admin_details(admin_id, 'admin/admin_delete.html')
-
-
 @app.route('/admins/add', methods=['POST'])
 def add_admin():
     school_cursor = school_db.cursor()
@@ -49,12 +44,7 @@ def add_admin():
 
 @app.route('/admins/update/<admin_id>', methods=['GET'])
 def get_admin_to_update(admin_id):
-    school_cursor = school_db.cursor()
-    school_cursor.execute("select admin_id, first_name, last_name, role, email, address, phone from administration"
-                          " where admin_id = %(ad_id)s", {'ad_id': admin_id})
-    result = school_cursor.fetchall()
-    school_cursor.close()
-    return render_template('admin/admin_update.html', admin=result[0])
+    return get_admin_details(admin_id, 'admin/admin_update.html')
 
 
 @app.route('/admins/update', methods=['POST'])
@@ -74,6 +64,11 @@ def update_admin():
     school_db.commit()
     school_cursor.close()
     return redirect("/admins")
+
+
+@app.route('/admins/delete/<admin_id>', methods=['GET'])
+def get_admin_for_delete(admin_id):
+    return get_admin_details(admin_id, 'admin/admin_delete.html')
 
 
 @app.route('/admins/delete', methods=['POST'])

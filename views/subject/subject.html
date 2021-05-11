@@ -1,23 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'subject/subject_base.html' %}
 {% block title_page %}Matière{% endblock %}
 {% block title_main %}Matière{% endblock %}
-{% block content%}
-    <form class="row g-3 needs-validation" action="/subjects/update" method="post">
-            <input type="hidden" id="subject_id" name="subject_id" value="{{ subject[0] }}">
-        <div class="col-md-4">
-            <label class="form-label" for="subject_name">Matière</label>
-            <input class="form-control" type="text" id="subject_name" name="subject_name" value="{{ subject[1] }}">
-        </div>
-        <hr>
-        <div class="col-md-12">
-            <button class="btn btn-primary" type="submit">Modifier</button>
-        </div>
-    </form>
-    </br>
-    <form class="row g-3 needs-validation" action="/subjects/delete" method="post">
-        <input type="hidden" id="subject_id" name="subject_id" value="{{ subject[0] }}">
-        <div class="col-md-12">
-            <button class="btn btn-danger" type="submit">Supprimer</button>
-        </div>
-    </form>
+{% block actions %}
+    <div>
+        <a class="btn btn-primary"  href="update/{{subject[0]}}">Modifier</a>
+        <a class="btn btn-danger"  href="delete/{{subject[0]}}">Supprimer</a>
+    </div>
 {% endblock %}

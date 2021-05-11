@@ -1,23 +1,9 @@
-{% extends 'base.html' %}
-{% block title_page %}Les salle{% endblock %}
-{% block title_main %}Les salle{% endblock %}
-{% block content%}
-    <form class="row g-3 needs-validation" action="/classrooms" method="post">
-            <input type="hidden" id="classroom_id" name="classroom_id" value="{{ classroom[0] }}">
-        <div class="col-md-4">
-            <label class="form-label" for="classroom_name">Classe</label>
-            <input class="form-control" type="text" id="classroom_name" name="classroom_name" value="{{ classroom[1] }}">
-        </div>
-        <hr>
-        <div class="col-md-12">
-            <button class="btn btn-primary" type="submit">Modifier</button>
-        </div>
-        </form>
-        </br>
-        <form action="/classrooms/delete" method="post">
-            <input type="hidden" id="classroom_id" name="classroom_id" value="{{ classroom[0] }}">
-            <div class="col-md-12">
-                <button class="btn btn-danger" type="submit">Supprimer</button>
-            </div>
-        </form>
+{% extends 'classroom/classroom_base.html' %}
+{% block title_page %}Salle{% endblock %}
+{% block title_main %}Salle{% endblock %}
+{% block actions %}
+    <div>
+        <a class="btn btn-primary"  href="update/{{classroom[0]}}">Modifier</a>
+        <a class="btn btn-danger"  href="delete/{{classroom[0]}}">Supprimer</a>
+    </div>
 {% endblock %}

@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title_page %}Modifier classe{% endblock %}
+{% block title_main %}Modifier classe{% endblock %}
+{% block content%}
+    <form class="row g-3 needs-validation" action="/classes/update" method="post">
+        <input type="hidden" id="class_id" name="class_id" value="{{ classes[0] }}">
+        <div class="col-md-4">
+            <label class="form-label" for="class_name">Classe</label>
+            <input class="form-control" type="text" id="class_name" name="class_name" value="{{ classes[1] }}">
+        </div>
+        <hr>
+        <div class="col-12">
+            <button class="btn btn-primary" type="submit">Valider</button>
+        </div>
+    </form>
 
-</body>
-</html>
+{% endblock %}

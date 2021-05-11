@@ -9,7 +9,8 @@ def get_all_teachers():
     school_cursor.execute("select subject_id, subject_name from subject order by subject_name")
     subjects = school_cursor.fetchall()
     school_cursor = school_db.cursor()
-    school_cursor.execute("select teacher_id, first_name, last_name,grade,  email, address, phone from teacher ")
+    school_cursor.execute("select teacher_id, first_name, last_name,grade,  email, address,"
+                          " phone from teacher order by last_name")
     result = school_cursor.fetchall()
     school_cursor.close()
     return render_template('teacher/teachers.html', subjects=subjects, teachers=result)

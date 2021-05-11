@@ -1,0 +1,15 @@
+{% extends 'subject/subject_base.html' %}
+{% block title_page %}Supprimer une matière{% endblock %}
+{% block title_main %}Supprimer une matière{% endblock %}
+{% block actions %}
+    <form action="/subjects/delete" method="post">
+        <input type="hidden" id="subject_id" name="subject_id" value="{{ subject[0] }}">
+        <div>
+            <button class="btn btn-danger" type="submit">Supprimer</button>
+            <span>
+                <i class="fas fa-exclamation-triangle fa-2x" style="color:red"></i>Attention la suppression est définitive
+            </span>
+        </div>
+    </form>
+
+{% endblock %}

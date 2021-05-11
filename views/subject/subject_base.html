@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title_page %}Matière{% endblock %}
+{% block title_main %}Matière{% endblock %}
+{% block content%}
+    <article>
+    <div>
+        <span class="detail_title">Nom :</span>
+        <span class="detail_value">{{subject[1]}}</span>
+    </div>
+    <hr>
+    {% block actions %}
+    {% endblock %}
+</article>
+{% endblock %}

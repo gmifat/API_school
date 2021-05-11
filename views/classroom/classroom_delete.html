@@ -1,0 +1,15 @@
+{% extends 'classroom/classroom_base.html' %}
+{% block title_page %}Supprimer une salle{% endblock %}
+{% block title_main %}Supprimer une salle{% endblock %}
+{% block actions %}
+    <form action="/classrooms/delete" method="post">
+        <input type="hidden" id="classroom_id" name="classroom_id" value="{{ classroom[0] }}">
+        <div>
+            <button class="btn btn-danger" type="submit">Supprimer</button>
+            <span>
+                <i class="fas fa-exclamation-triangle fa-2x" style="color:red"></i>Attention la suppression est définitive
+            </span>
+        </div>
+    </form>
+
+{% endblock %}
