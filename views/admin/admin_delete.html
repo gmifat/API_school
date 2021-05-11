@@ -1,0 +1,15 @@
+{% extends 'admin/admin_base.html' %}
+{% block title_main %}Suppression d'un agent vocataire{% endblock %}
+{% block actions %}
+        <div>
+            <form action="/admins/delete" method="post">
+                <input type="hidden" id="admin_id" name="admin_id" value="{{ admin[0] }}">
+                <div>
+                    <button class="btn btn-danger" type="submit">Supprimer</button>
+                    <span><i class="fas fa-exclamation-triangle fa-2x" style="color:red"></i> Attention la suppression est définitive</span>
+                </div>
+
+
+            </form>
+        </div>
+{% endblock %}

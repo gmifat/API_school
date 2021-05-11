@@ -1,0 +1,9 @@
+{% extends 'teacher/teacher_base.html' %}
+{% block title_page %}Enseignant{% endblock %}
+{% block title_main %}Enseignant{% endblock %}
+{% block actions %}
+    <div>
+        <a class="btn btn-primary"  href="update/{{teacher[0]}}">Modifier</a>
+        <a class="btn btn-danger"  href="delete/{{teacher[0]}}">Supprimer</a>
+    </div>
+{% endblock %}

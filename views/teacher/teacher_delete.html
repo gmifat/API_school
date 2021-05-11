@@ -1,0 +1,13 @@
+{% extends 'teacher/teacher_base.html' %}
+{% block title_page %}Supprimer Enseignant{% endblock %}
+{% block title_main %}Supprimer Enseignant{% endblock %}
+{% block actions %}
+    <form action="/teachers/delete" method="post">
+        <input type="hidden" id="teacher_id" name="teacher_id" value="{{ teacher[0] }}">
+        <div>
+            <button class="btn btn-danger" type="submit">Supprimer</button>
+            <span><i class="fas fa-exclamation-triangle fa-2x" style="color:red"></i> Attention la suppression est définitive</span>
+        </div>
+    </form>
+
+{% endblock %}

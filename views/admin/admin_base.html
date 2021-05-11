@@ -28,9 +28,8 @@
             <span class="detail_value">{{admin[6]}}</span>
         </div>
         <hr>
-        <div>
-            <a class="btn btn-primary" href="update/{{admin[0]}}">Modifier</a>
-            <a class="btn btn-danger" href="delete/{{admin[0]}}">Supprimer</a>
-        </div>
+        {% block actions %}
+
+        {% endblock %}
     </article>
 {% endblock %}

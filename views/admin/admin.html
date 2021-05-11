@@ -1,0 +1,7 @@
+{% extends 'admin/admin_base.html' %}
+{% block actions %}
+        <div>
+            <a class="btn btn-primary" href="update/{{admin[0]}}">Modifier</a>
+            <a class="btn btn-danger" href="delete/{{admin[0]}}">Supprimer</a>
+        </div>
+{% endblock %}
