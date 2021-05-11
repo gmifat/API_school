@@ -3,11 +3,26 @@
 {% block title_main %}Les classes{% endblock %}
 {% block content%}
     <article>
-        <div>
-            {% for class in classes %}
-                <div><a href="/classes/{{ class[0] }}">{{ class[1] }}</a></div>
-            {% endfor %}
-        </div>
+        <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Emploi du temps</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for class in classes %}
+                    <tr>
+                        <td><a href="/classes/{{ class[0] }}">{{ class[1] }}</a></td>
+                        <td><a href="#"></a></td>
+                        <td><a href="classes/update/{{class[0]}}">Modifier</a></td>
+                        <td><a href="classes/delete/{{class[0]}}">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         <hr>
         <form class="row g-3 needs-validation" action="/classes/add" method="post">
             <div class="col-md-4">
