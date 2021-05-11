@@ -1,0 +1,15 @@
+{% extends 'student/student_base.html' %}
+{% block title_main %}Suppression d'un étudiant{% endblock %}
+{% block actions %}
+        <div>
+            <form action="/students/delete" method="post">
+                <input type="hidden" id="student_id" name="student_id" value="{{ student[0] }}">
+                <div>
+                    <button class="btn btn-danger" type="submit">Supprimer</button>
+                    <span><i class="fas fa-exclamation-triangle fa-2x" style="color:red"></i> Attention la suppression est définitive</span>
+                </div>
+
+
+            </form>
+        </div>
+{% endblock %}

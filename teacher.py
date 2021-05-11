@@ -34,11 +34,6 @@ def get_teacher(teacher_id):
     return get_teacher_details(teacher_id, 'teacher/teacher.html')
 
 
-@app.route('/teachers/delete/<teacher_id>', methods=['GET'])
-def get_teacher_to_delete(teacher_id):
-    return get_teacher_details(teacher_id, 'teacher/teacher_delete.html')
-
-
 @app.route('/teachers/add', methods=['POST'])
 def add_teacher():
     school_cursor = school_db.cursor()
@@ -121,6 +116,11 @@ def update_teacher():
     school_db.commit()
     school_cursor.close()
     return redirect("/teachers")
+
+
+@app.route('/teachers/delete/<teacher_id>', methods=['GET'])
+def get_teacher_to_delete(teacher_id):
+    return get_teacher_details(teacher_id, 'teacher/teacher_delete.html')
 
 
 @app.route('/teachers/delete', methods=['POST'])
