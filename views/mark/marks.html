@@ -1,10 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title_page %}Notes{% endblock %}
+{% block title_main %}Notes{% endblock %}
+{% block content%}
+    <article>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Note</th>
+                        <th>Étudiant</th>
+                        <th>Matière</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for mark in marks %}
+                    <tr>
+                        <td><a href="marks/{{mark[0]}}">{{mark[1]}}</a></td>
+                        <td>{{mark[2]}}</td>
+                        <td>{{mark[3]}}</td>
+                        <td><a href="marks/update/{{mark[0]}}">Modifier</a></td>
+                        <td><a href="marks/delete/{{mark[0]}}">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </article>
+        <hr>
+        <h4>Ajouter un nouveau enseignant</h4>
+        <form class="row g-3 needs-validation"  action="/marks/add" method="post">
+            <div class="col-md-4">
+                <label class="form-label" for="score_valus">Note</label>
+                <input class="form-control" type="text" id="score_valus" name="score_valus"></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="">Étudiant</label>
+                <input class="form-control" type="text" id="" name=""></br>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="">Mtière</label>
+                <input class="form-control" type="text" id="" name="teacher_grade"></br>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Ajouter</button>
+            </div>
+        </form>
+{% endblock %}
 
-</body>
-</html>
+
+
+
+
+
+

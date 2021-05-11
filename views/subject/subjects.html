@@ -7,16 +7,14 @@
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Emploi du temps</th>
-                        <th></th>
-                        <th></th>
+                        <th>Modifier</th>
+                        <th>Supprimer</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for subject in subjects %}
                     <tr>
                         <td><a href="/subjects/{{ subject[0] }}">{{ subject[1] }}</a></td>
-                        <td><a href="#"></a></td>
                         <td><a href="subjects/update/{{subject[0]}}">Modifier</a></td>
                         <td><a href="subjects/delete/{{subject[0]}}">Supprimer</a></td>
                     </tr>

@@ -7,16 +7,14 @@
             <thead>
                 <tr>
                     <th>Numéro de salle</th>
-                    <th>Emploi du temps</th>
-                    <th></th>
-                    <th></th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
                 </tr>
             </thead>
             <tbody>
             {% for classroom in classrooms %}
                 <tr>
                     <td><a href="/classrooms/{{ classroom[0] }}">{{ classroom[1] }}</a></td>
-                    <td><a href="#"></a></td>
                     <td><a href="classrooms/update/{{classroom[0]}}">Modifier</a></td>
                     <td><a href="classrooms/delete/{{classroom[0]}}">Supprimer</a></td>
                 </tr>
