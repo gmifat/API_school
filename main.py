@@ -3,6 +3,7 @@ from flask import render_template, request, redirect
 # import declared routes
 import admin
 import teacher
+import student
 
 from base import app
 from base import school_db

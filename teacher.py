@@ -6,7 +6,7 @@ from base import school_db
 @app.route('/teachers', methods=['GET'])
 def get_all_teachers():
     school_cursor = school_db.cursor()
-    school_cursor.execute("select subject_id, subject_name from subject")
+    school_cursor.execute("select subject_id, subject_name from subject order by subject_name")
     subjects = school_cursor.fetchall()
     school_cursor = school_db.cursor()
     school_cursor.execute("select teacher_id, first_name, last_name,grade,  email, address, phone from teacher ")
@@ -21,7 +21,8 @@ def get_teacher_details(teacher_id, teacher_template):
                           " tc.phone, sb.subject_id, sb.subject_name from teacher tc"
                           " left join speciality on speciality.teacher_id = tc.teacher_id"
                           " left join subject sb on speciality.subject_id = sb.subject_id"
-                          " where tc.teacher_id = %(s_id)s",
+                          " where tc.teacher_id = %(s_id)s"
+                          " order by sb.subject_name",
                           {'s_id': teacher_id})
     result = school_cursor.fetchall()
     school_cursor.close()
@@ -64,8 +65,9 @@ def add_teacher():
 def get_teacher_to_update(teacher_id):
     school_cursor = school_db.cursor()
     school_cursor.execute("select subject.subject_id, subject.subject_name, speciality.teacher_id from subject"
-                          " left join speciality on speciality.subject_id = subject.subject_id"
-                          " where speciality.teacher_id is null or speciality.teacher_id = %(t_id)s",
+                          " left join speciality on speciality.teacher_id = %(t_id)s"
+                          " and speciality.subject_id = subject.subject_id"
+                          " order by subject.subject_name",
                           {'t_id': teacher_id})
     subjects = school_cursor.fetchall()
     school_cursor.execute("select teacher_id, first_name, last_name, grade, email, address, phone from teacher"
@@ -79,7 +81,7 @@ def get_teacher_to_update(teacher_id):
 @app.route('/teachers/update', methods=['POST'])
 def update_teacher():
     t_id = request.form['teacher_id']
-    school_cursor = school_db.cursor()
+    subjects = request.form.getlist('subjects')
     teacher = {'v_first_name': request.form['teacher_name'],
                'v_last_name': request.form['teacher_lastName'],
                'v_grade': request.form['teacher_grade'],
@@ -87,9 +89,35 @@ def update_teacher():
                'v_phone': request.form['teacher_phone'],
                'v_address': request.form['teacher_address'],
                'v_id': t_id}
+
+    school_cursor = school_db.cursor()
     school_cursor.execute("update teacher set first_name = %(v_first_name)s, last_name = %(v_last_name)s,"
                           " grade = %(v_grade)s, email = %(v_email)s, phone = %(v_phone)s, address = %(v_address)s"
                           " where teacher_id = %(v_id)s", teacher)
+
+    school_cursor.execute("select speciality_id, subject_id from speciality where teacher_id = %(v_id)s",
+                          {'v_id': t_id})
+    current_subjects = school_cursor.fetchall()
+    for current_subject in current_subjects:
+        is_found = False
+        for subject in subjects:
+            if current_subject[1] == subject:
+                is_found = True
+
+        if not is_found:
+            school_cursor.execute("delete from speciality where speciality_id = %(sp_id)s",
+                                  {'sp_id': current_subject[0]})
+
+    for subject_id in subjects:
+        is_found = False
+        for current_subject in current_subjects:
+            if current_subject[1] == subject_id:
+                is_found = True
+
+        if not is_found:
+            school_cursor.execute("insert into speciality (teacher_id, subject_id) values(%(v_t_id)s, %(v_s_id)s)",
+                                  {'v_t_id': t_id, 'v_s_id': subject_id})
+
     school_db.commit()
     school_cursor.close()
     return redirect("/teachers")
@@ -99,6 +127,9 @@ def update_teacher():
 def delete_teacher():
     t_id = request.form['teacher_id']
     school_cursor = school_db.cursor()
+    school_cursor.execute("delete class_session, speciality from speciality"
+                          " left join class_session on class_session.speciality_id = speciality.speciality_id"
+                          " where speciality.teacher_id = (%(t_id)s)", {'t_id': t_id})
     school_cursor.execute("delete from teacher  where teacher_id = (%(t_id)s)", {'t_id': t_id})
     school_db.commit()
     school_cursor.close()
