@@ -13,6 +13,7 @@
                     <th>Email</th>
                     <th>Adresse</th>
                     <th>Téléphone</th>
+                    <th>Voir/Editer notes</th>
                     <th>Modifier</th>
                     <th>Supprimer</th>
                 </tr>
@@ -27,6 +28,7 @@
                     <td>{{student[5]}}</td>
                     <td>{{student[6]}}</td>
                     <td>{{student[7]}}</td>
+                    <td><a href="{{ url_for('get_student_marks', student_id=student[0])}}">Notes</a></td>
                     <td><a href="{{ url_for('get_student_to_update', student_id=student[0])}}">Modifier</a></td>
                     <td><a href="students/delete/{{student[0]}}">Supprimer</a></td>
                 </tr>

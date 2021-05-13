@@ -7,6 +7,7 @@ import student
 import classroom
 import subject
 import class_student
+import mark
 
 from base import app
 from base import school_db

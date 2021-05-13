@@ -6,7 +6,7 @@ from base import school_db
 @app.route('/classrooms', methods=['GET'])
 def get_all_classrooms():
     school_cursor = school_db.cursor()
-    school_cursor.execute("select classroom_id, room_number from classroom")
+    school_cursor.execute("select classroom_id, room_number from classroom order by room_number")
     classrooms = school_cursor.fetchall()
     school_cursor.close()
     return render_template('classroom/classrooms.html', classrooms=classrooms)

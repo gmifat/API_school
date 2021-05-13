@@ -100,3 +100,9 @@ def delete_student():
     school_cursor.close()
     return redirect("/students")
 
+
+@app.route('/students/mark/<student_id>', methods=['GET'])
+def get_student_marks(student_id):
+    return "In progress"
+
+

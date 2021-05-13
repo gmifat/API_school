@@ -6,7 +6,8 @@ from base import school_db
 @app.route('/admins', methods=['GET'])
 def get_all_admins():
     school_cursor = school_db.cursor()
-    school_cursor.execute("select admin_id, first_name, last_name, role, email, address, phone from administration")
+    school_cursor.execute("select admin_id, first_name, last_name, role, email, address, phone from administration"
+                          " ORDER BY first_name")
     result = school_cursor.fetchall()
     school_cursor.close()
     return render_template('admin/admins.html', admins=result)

@@ -6,7 +6,7 @@ from base import school_db
 @app.route('/classes', methods=['GET'])
 def get_all_classes():
     school_cursor = school_db.cursor()
-    school_cursor.execute("select class_id, class_name from class")
+    school_cursor.execute("select class_id, class_name from class order by class_name")
     result = school_cursor.fetchall()
     school_cursor.close()
     return render_template('class/classes.html', classes=result)
