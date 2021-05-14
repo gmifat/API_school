@@ -103,6 +103,16 @@ def delete_student():
 
 @app.route('/students/mark/<student_id>', methods=['GET'])
 def get_student_marks(student_id):
-    return "In progress"
+    school_cursor = school_db.cursor()
+    school_cursor.execute("select student.student_id, student.first_name, student.last_name, student.card_number,"
+                          " class.class_name, student.email, student.address, student.phone from student"
+                          " join class on class.class_id = student.class_id"
+                          " left join class_subject on class_subject.class_id = class.class_id"
+                          " left join mark on mark.student_id = student.student_id and "
+                          " class_subject.subject_id = mark.subject_id"
+                          " where student.student_id = %(st_id)s", {'st_id': student_id})
+    result = school_cursor.fetchall()
+    school_cursor.close()
+    return render_template("student/student_marks.html", student=result[0])
 
 

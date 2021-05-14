@@ -8,6 +8,14 @@
             <label class="form-label" for="class_name">Classe</label>
             <input class="form-control" type="text" id="class_name" name="class_name" value="{{ classes[1] }}">
         </div>
+        <fieldset>
+                {% for subject in subjects %}
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="subjects" value="{{subject[0]}}">
+                      <label class="form-check-label">{{subject[1]}}</label>
+                    </div>
+                {% endfor %}
+            </fieldset>
         <hr>
         <div class="col-12">
             <button class="btn btn-primary" type="submit">Valider</button>

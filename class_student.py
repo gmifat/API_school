@@ -5,20 +5,25 @@ from base import school_db
 
 @app.route('/classes', methods=['GET'])
 def get_all_classes():
+
     school_cursor = school_db.cursor()
+    school_cursor.execute("select subject_id, subject_name from subject order by subject_name")
+    subjects = school_cursor.fetchall()
     school_cursor.execute("select class_id, class_name from class order by class_name")
     result = school_cursor.fetchall()
     school_cursor.close()
-    return render_template('class/classes.html', classes=result)
+    return render_template('class/classes.html', classes=result, subjects=subjects)
 
 
 def get_class_details(class_id, class_template):
     school_cursor = school_db.cursor()
+    school_cursor.execute("select subject_id, subject_name from subject order by subject_name")
+    subjects = school_cursor.fetchall()
     school_cursor.execute("select class_id, class_name from class where class_id = %(s_id)s",
                           {'s_id': class_id})
     result = school_cursor.fetchall()
     school_cursor.close()
-    return render_template(class_template, classes=result[0])
+    return render_template(class_template, classes=result[0], subjects=subjects)
 
 
 @app.route('/classes/<class_id>', methods=['GET'])
@@ -32,6 +37,7 @@ def add_class():
     school_cursor = school_db.cursor()
     school_cursor.execute("insert into class (class_name) values (%(name)s)", {'name': name})
     school_db.commit()
+
     school_cursor.close()
     return redirect("/classes")
 
