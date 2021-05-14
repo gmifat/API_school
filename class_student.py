@@ -17,13 +17,14 @@ def get_all_classes():
 
 def get_class_details(class_id, class_template):
     school_cursor = school_db.cursor()
-    school_cursor.execute("select subject_id, subject_name from subject order by subject_name")
-    subjects = school_cursor.fetchall()
-    school_cursor.execute("select class_id, class_name from class where class_id = %(s_id)s",
+    school_cursor.execute("select class.class_id, class.class_name,class_subject.subject_id, subject.subject_name"
+                          " from class left join class_subject on class.class_id = class_subject.class_id"
+                          " left join subject on class_subject.subject_id = subject.subject_id"
+                          " where class.class_id = %(s_id)s",
                           {'s_id': class_id})
     result = school_cursor.fetchall()
     school_cursor.close()
-    return render_template(class_template, classes=result[0], subjects=subjects)
+    return render_template(class_template, classes=result[0], class_details=result)
 
 
 @app.route('/classes/<class_id>', methods=['GET'])
@@ -36,8 +37,13 @@ def add_class():
     name = request.form['class_name']
     school_cursor = school_db.cursor()
     school_cursor.execute("insert into class (class_name) values (%(name)s)", {'name': name})
-    school_db.commit()
 
+    class_id = school_cursor.lastrowid
+    subjects = request.form.getlist('subjects')
+    for subject_id in subjects:
+        school_cursor.execute("insert into class_subject (class_id, subject_id) values(%(cl_id)s, %(sb_id)s)",
+                              {'cl_id': class_id, 'sb_id': subject_id})
+    school_db.commit()
     school_cursor.close()
     return redirect("/classes")
 

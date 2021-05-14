@@ -105,14 +105,54 @@ def delete_student():
 def get_student_marks(student_id):
     school_cursor = school_db.cursor()
     school_cursor.execute("select student.student_id, student.first_name, student.last_name, student.card_number,"
-                          " class.class_name, student.email, student.address, student.phone from student"
+                          " class.class_name, student.email, student.address, student.phone,"
+                          " subject.subject_id, subject.subject_name, mark.mark_id, mark.score_value"
+                          " from student"
                           " join class on class.class_id = student.class_id"
                           " left join class_subject on class_subject.class_id = class.class_id"
-                          " left join mark on mark.student_id = student.student_id and "
-                          " class_subject.subject_id = mark.subject_id"
+                          " left join subject on subject.subject_id = class_subject.subject_id"
+                          " left join mark on mark.student_id = student.student_id"
+                          " and mark.subject_id = subject.subject_id"
                           " where student.student_id = %(st_id)s", {'st_id': student_id})
     result = school_cursor.fetchall()
     school_cursor.close()
-    return render_template("student/student_marks.html", student=result[0])
+    return render_template("student/student_marks.html", student=result[0], student_details=result)
 
+
+@app.route('/students/mark/<student_id>/<subject_id>', methods=['GET'])
+def get_student_marks_to_update(student_id, subject_id):
+    school_cursor = school_db.cursor()
+    school_cursor.execute("select student.student_id, student.first_name, student.last_name,"
+                          " class.class_name,"
+                          " subject.subject_id, subject.subject_name, mark.mark_id, mark.score_value"
+                          " from student"
+                          " join class on class.class_id = student.class_id"
+                          " join class_subject on class_subject.class_id = class.class_id"
+                          " join subject on subject.subject_id = class_subject.subject_id"
+                          " left join mark on mark.student_id = student.student_id"
+                          " and mark.subject_id = subject.subject_id"
+                          " where student.student_id = %(st_id)s and subject.subject_id = %(sb_id)s",
+                          {'st_id': student_id, 'sb_id': subject_id})
+    result = school_cursor.fetchall()
+    school_cursor.close()
+    return render_template("student/mark_update.html", student=result[0])
+
+
+@app.route('/students/mark/add', methods=['POST'])
+def add_marks():
+    school_cursor = school_db.cursor()
+    if request.form['mark_id'] is None:
+        school_cursor.execute("insert into mark (score_value, student_id, subject_id)"
+                              " values (%(m_score_value)s, %(m_student_id)s, %(m_subject_id)s)",
+                              {'m_score_value': request.form['score_value'],
+                               'm_student_id': request.form['student_id'],
+                               'm_subject_id': request.form['subject_id']})
+    else:
+        school_cursor.execute("update mark set score_value = %(m_score_value)s where mark_id = %(m_mark_id)s",
+                              {'m_score_value': request.form['score_value'],
+                               'm_mark_id': request.form['mark_id']})
+
+    school_db.commit()
+    school_cursor.close()
+    return redirect("/students/mark/"+request.form['student_id'])
 

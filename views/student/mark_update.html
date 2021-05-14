@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title_page %}Notes{% endblock %}
+{% block title_main %}Notes{% endblock %}
+{% block content %}
+    <article>
+        <div>
+            <b>Etudiant : </b>
+            <span>{{student[1]}} {{student[2]}}</span>
+        </div>
+        <div>
+            <b>Classe : </b>
+            <span>{{student[3]}}</span>
+        </div>
+        <hr>
+        <form class="row g-3 needs-validation" action="/students/mark/add" method="post">
+            <input id="student_id" name="student_id" value="{{student[0]}}" type="hidden">
+            <input id="subject_id" name="subject_id" value="{{student[4]}}" type="hidden">
+            <input id="mark_id" name="mark_id" value="{{student[6]}}" type="hidden">
+            <div class="col-md-4">
+                <label class="form-label" for="score_value" >{{student[5]}}</label>
+                <input class="form-control" type="text" id="score_value" name="score_value"
+                       value="{% if student[6] is not none %} {{student[7]}} {% endif %}">
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Valider</button>
+            </div>
+
+        </form>
+    </article>
+
+{% endblock %}

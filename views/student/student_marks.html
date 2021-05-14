@@ -11,24 +11,36 @@
             <b>Classe : </b>
             <span>{{student[4]}}</span>
         </div>
-        <form class="row g-3 needs-validation" action="/students/add" method="post">
+        <form class="row g-3 needs-validation" action="/students/mark/add" method="post">
+            <input id="student_id" name="student_id" value="{{student[0]}}" type="hidden">
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Matière</th>
                         <th>Note</th>
+                        <th>Note</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for student in students %}
+                {% for student_detail in student_details %}
                     <tr>
-                        <td>{{student[5]}}</td>
-                        <td><input value="{{student[7]}}" type="text"></td>
+                        <td>{{student_detail[9]}}</td>
+                        <td>
+                            {% if student_detail[11] is none %}
+                                --
+                            {% else %}
+                                {{student_detail[11]}}
+                            {% endif %}
+                        </td>
+                        <td><a href="/students/mark/{{student[0]}}/{{student_detail[8]}}">Modifier</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <button class="btn btn-primary" type="submit">Valider</button>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">Valider</button>
+            </div>
+
         </form>
     </article>
     <hr>

@@ -7,6 +7,17 @@
         <span class="detail_title">Nom :</span>
         <span class="detail_value">{{classes[1]}}</span>
     </div>
+
+    <div>
+        <h4>Matière</h4>
+        <ul>
+            {% for class_detail in class_details %}
+                {% if class_detail[2] is not none : %}
+                    <li>{{class_detail[3]}}</li>
+                {% endif%}
+            {% endfor %}
+        </ul>
+    </div>
     <hr>
     {% block actions %}
     {% endblock %}
