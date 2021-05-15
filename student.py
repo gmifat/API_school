@@ -141,7 +141,7 @@ def get_student_marks_to_update(student_id, subject_id):
 @app.route('/students/mark/add', methods=['POST'])
 def add_marks():
     school_cursor = school_db.cursor()
-    if request.form['mark_id'] is None:
+    if request.form['mark_id'] == "None":
         school_cursor.execute("insert into mark (score_value, student_id, subject_id)"
                               " values (%(m_score_value)s, %(m_student_id)s, %(m_subject_id)s)",
                               {'m_score_value': request.form['score_value'],
