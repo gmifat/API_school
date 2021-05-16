@@ -5,7 +5,6 @@ from base import school_db
 
 @app.route('/classes', methods=['GET'])
 def get_all_classes():
-
     school_cursor = school_db.cursor()
     school_cursor.execute("select subject_id, subject_name from subject order by subject_name")
     subjects = school_cursor.fetchall()
@@ -81,7 +80,7 @@ def update_class():
     for current_subject in current_subjects:
         is_found = False
         for subject in subjects:
-            if current_subject[1] == subject:
+            if current_subject[1] == int(subject):
                 is_found = True
 
         if not is_found:
@@ -91,7 +90,7 @@ def update_class():
     for subject_id in subjects:
         is_found = False
         for current_subject in current_subjects:
-            if current_subject[1] == subject_id:
+            if current_subject[1] == int(subject_id):
                 is_found = True
 
         if not is_found:

@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title_page %}Emploi de temps{% endblock %}
+{% block title_main %}Emploi de temps{% endblock %}
+{% block content %}
+    <article>
+        <table class="table table-striped" id="class_session_table">
+            <thead>
+                <th>Lundi</th>
+                <th>Mardi</th>
+                <th>Mercredi</th>
+                <th>Jeudi</th>
+                <th>Vendredi</th>
+                <th>Samedi</th>
+                <th>Dimanche</th>
+            </thead>
+            <tbody>
+                {% for day in ('Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche') %}
+                    <td>
+                        {% for class_session in class_sessions[day] %}
+                            <div class="card">
+                                  <h5 class="card-header">{{class_session[4]}} - {{class_session[5]}}</h5>
+                                  <div class="card-body">
+                                      <h5 class="card-title">{{class_session[8]}} {{class_session[9]}}</h5>
+                                      <p class="card-text">{{class_session[11]}}</p>
+                                  {% if class_session[12] is not none %}
+                                      <a href="#" class="card-link">
+                                          <i class="fas fa-school fa-lg me-2"></i>{{class_session[13]}}
+                                      </a>
+                                  {% else %}
+                                      <span class="me-2"><i class="fas fa-school fa-lg me-2"></i>---</span>
+                                  {% endif %}
+                                      <hr>
+                                  {% if class_session[6] is not none and class_session[6]|length %}
+                                      <a href="#" class="card-link">
+                                          <i class="fas fa-globe fa-lg me-2"></i>{{class_session[6]}}
+                                      </a>
+                                   {% else %}
+                                      <span><i class="fas fa-globe fa-lg me-2"></i>---</span>
+                                  {% endif %}
+                                  </div>
+                            </div>
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ class_info }}
+        <hr>
+        {{ teacher_info }}
+        <hr>
+        {{ classrooms }}
+        <hr>
 
-</body>
-</html>
+    </article>
+
+{% endblock %}

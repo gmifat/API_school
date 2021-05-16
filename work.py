@@ -1,15 +1,32 @@
+select cls.class_session_id, cls.speciality_id, cls.class_subject_id,
+cls.day, cls.start_time, cls.duration, cls.virtual,
+teacher.teacher_id, teacher.first_name, teacher.last_name,
+subject.subject_id, subject.subject_name,
+cls.classroom_id, classroom.room_number
+from class_session cls
+join speciality on speciality.speciality_id = cls.speciality_id
+join class_subject on class_subject.class_subject_id = cls.class_subject_id
+join subject on speciality.subject_id = subject.subject_id
+join teacher on speciality.teacher_id = teacher.teacher_id
+left join classroom on classroom.classroom_id = cls.classroom_id
+where class_subject.class_id = 1
+order by day
 
 
 
 
-
-
-
-
-
-
-
-
+school_cursor.execute("select cls.class_session_id, cls.speciality_id, cls.class_subject_id,"
+                          " cls.day, cls.start_time, cls.duration, cls.virtual, subject.subject_name,"
+                          " teacher.*, classroom.*"
+                          " from class_session cls"
+                          " join speciality on speciality.speciality_id = cls.speciality_id"
+                          " join class_subject on class_subject.class_subject_id = cls.class_subject_id"
+                          " join subject on speciality.subject_id = subject.subject_id"
+                          " join teacher on speciality.teacher_id = teacher.teacher_id"
+                          " left join classroom on classroom.classroom_id = cls.classroom_id"
+                          " where class_subject.class_id = %(cl_id)s"
+                          " order by day", {'cl_id': class_id})
+    class_sessions = school_cursor.fetchall()
 
 
 
