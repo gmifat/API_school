@@ -52,7 +52,7 @@
         <hr>
         <h2>Programmer un cours</h2>
         <form action="{{ url_for('add_class_sessions')}}" method="post" class="row g-3 needs-validation">
-            <input type="hidden" value="{{ class_info[0][0] }}">
+            <input name="class_id" id="class_id" type="hidden" value="{{ class_info[0][0] }}">
             <div class="col-md-6">
                 <label for="class_subject_id" class="form-label">Matière</label>
                 <select name="class_subject_id" id="class_subject_id" class="form-select">
@@ -64,7 +64,7 @@
             </div>
             <div class="col-md-6">
                 <label for="speciality_id" class="form-label">Professeur</label>
-                <select name="speciality_id" id="speciality_id" class="form-select" disabled>
+                <select name="speciality_id" id="speciality_id" class="form-select">
                     <option value="">Choisir ...</option>
                     {% for ti in teacher_info %}
                         <option data-subject="{{ ti[4] }}" value="{{ ti[0] }}">{{ ti[2] }} {{ ti[3] }}</option>
@@ -97,20 +97,33 @@
             </select>
             </div>
             <div class="col-md-8">
-                <label for="virtual" class="form-label">Visio conférence</label>
-                <input name="virtual" id="virtual" type="text" class="form-control">
+                <label for="videoconference" class="form-label">Visio conférence</label>
+                <input name="videoconference" id="videoconference" type="text" class="form-control">
             </div>
              <div class="col-12">
                 <button class="btn btn-primary" type="submit">Valider</button>
              </div>
         </form>
-        {{ class_info }}
-        <hr>
-        {{ teacher_info }}
-        <hr>
-        {{ classrooms }}
-        <hr>
 
     </article>
+<script>
+	$('#class_subject_id').on('change', function() {
+		var subject_id = $(this).find(":selected").data("subject");
+		console.log(subject_id) ;
+		$("#speciality_id option").each(function(item){
+			var element =  $(this) ;
+			console.log(element.data("subject"));
+			if (element.data("subject") != subject_id){
+				element.hide() ;
+			}else{
+				element.show();
+			}
+		}) ;
+
+		$("#speciality_id").val($("#speciality_id option:visible:first").val());
+
+});
+</script>
 
 {% endblock %}
+

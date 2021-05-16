@@ -1,16 +1,6 @@
-select cls.class_session_id, cls.speciality_id, cls.class_subject_id,
-cls.day, cls.start_time, cls.duration, cls.virtual,
-teacher.teacher_id, teacher.first_name, teacher.last_name,
-subject.subject_id, subject.subject_name,
-cls.classroom_id, classroom.room_number
-from class_session cls
-join speciality on speciality.speciality_id = cls.speciality_id
-join class_subject on class_subject.class_subject_id = cls.class_subject_id
-join subject on speciality.subject_id = subject.subject_id
-join teacher on speciality.teacher_id = teacher.teacher_id
-left join classroom on classroom.classroom_id = cls.classroom_id
-where class_subject.class_id = 1
-order by day
+insert into class_session
+(speciality_id, class_subject_id, classroom_id, day, start_time, end_time, virtual)
+values ('30', '19', '11', 'Vendredi', '08:30', '10:00', '')
 
 
 

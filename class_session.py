@@ -1,5 +1,4 @@
 from collections import defaultdict
-from itertools import groupby
 
 from flask import render_template, request, redirect
 from base import app
@@ -28,7 +27,7 @@ def get_class_sessions(class_id):
 
     school_cursor.execute("select cls.class_session_id, cls.speciality_id, cls.class_subject_id,"
                           " cls.day, TIME_FORMAT(cls.start_time, '%H:%i'), TIME_FORMAT(cls.end_time, '%H:%i'),"
-                          " cls.virtual,"
+                          " cls.videoconference,"
                           " teacher.teacher_id, teacher.first_name, teacher.last_name,"
                           " subject.subject_id, subject.subject_name,"
                           " cls.classroom_id, classroom.room_number"
@@ -53,10 +52,11 @@ def get_class_sessions(class_id):
 @app.route('/class_sessions', methods=['POST'])
 def add_class_sessions():
     school_cursor = school_db.cursor()
-    school_cursor.execute("insert into class_session (speciality_id, class_subject_id, classroom_id,"
-                          " day, start_time, end_time, virtual)"
+    try:
+        school_cursor.execute("insert into class_session (speciality_id, class_subject_id, classroom_id,"
+                          " day, start_time, end_time, videoconference)"
                           " values (%(speciality_id)s, %(class_subject_id)s, %(classroom_id)s,"
-                          " %(day)s, %(start_time)s, %(end_time)s), %(virtual)s)",
+                          " %(day)s, %(start_time)s, %(end_time)s, %(videoconference)s)",
                           {
                             'speciality_id': request.form['speciality_id'],
                             'class_subject_id': request.form['class_subject_id'],
@@ -64,10 +64,12 @@ def add_class_sessions():
                             'day': request.form['day'],
                             'start_time': request.form['start_time'],
                             'end_time': request.form['end_time'],
-                            'virtual': request.form['virtual']
+                            'videoconference': request.form['videoconference']
                           })
-    school_db.commit()
-    school_cursor.close()
-    return redirect('/admins')
+        school_db.commit()
+    except:
+        req = school_cursor.statement
+        print(req)
 
-    return "In Progress"
+    school_cursor.close()
+    return redirect('/class_sessions/'+request.form['class_id'])
