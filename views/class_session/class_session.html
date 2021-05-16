@@ -3,6 +3,11 @@
 {% block title_main %}Emploi de temps{% endblock %}
 {% block content %}
     <article>
+        <div>
+            <span class="detail_title">Classe :</span>
+            <span class="detail_value fw-bold">{{ class_info[0][1] }}</span>
+        </div>
+        <hr>
         <table class="table table-striped" id="class_session_table">
             <thead>
                 <th>Lundi</th>
@@ -44,6 +49,61 @@
                 {% endfor %}
             </tbody>
         </table>
+        <hr>
+        <h2>Programmer un cours</h2>
+        <form action="{{ url_for('add_class_sessions')}}" method="post" class="row g-3 needs-validation">
+            <input type="hidden" value="{{ class_info[0][0] }}">
+            <div class="col-md-6">
+                <label for="class_subject_id" class="form-label">Matière</label>
+                <select name="class_subject_id" id="class_subject_id" class="form-select">
+                    <option value="">Choisir ...</option>
+                    {% for ci in class_info %}
+                        <option data-subject="{{ ci[2] }}" value="{{ ci[4] }}">{{ ci[3] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="speciality_id" class="form-label">Professeur</label>
+                <select name="speciality_id" id="speciality_id" class="form-select" disabled>
+                    <option value="">Choisir ...</option>
+                    {% for ti in teacher_info %}
+                        <option data-subject="{{ ti[4] }}" value="{{ ti[0] }}">{{ ti[2] }} {{ ti[3] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="day" class="form-label">Jour</label>
+                <select name="day" id="day" class="form-select">
+                    {% for day in ('Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche') %}
+                        <option value="{{ day }}">{{ day }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="start_time" class="form-label">Heure début</label>
+                <input name="start_time" id="start_time" type="time" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label for="end_time" class="form-label">Heure de fin</label>
+                <input name="end_time" id="end_time" type="time" class="form-control">
+            </div>
+            <div class="col-md-4">
+            <label for="classroom_id" class="form-label">Salle</label>
+            <select name="classroom_id" id="classroom_id" class="form-select">
+                <option value="">Choisir ... </option>
+                {% for classroom in classrooms %}
+                    <option value="{{ classroom[0] }}">{{ classroom[1] }}</option>
+                {% endfor %}
+            </select>
+            </div>
+            <div class="col-md-8">
+                <label for="virtual" class="form-label">Visio conférence</label>
+                <input name="virtual" id="virtual" type="text" class="form-control">
+            </div>
+             <div class="col-12">
+                <button class="btn btn-primary" type="submit">Valider</button>
+             </div>
+        </form>
         {{ class_info }}
         <hr>
         {{ teacher_info }}
