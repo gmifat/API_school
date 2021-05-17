@@ -1,7 +1,13 @@
 #class_session_table td{
 width : 14%;
+padding: .25rem .25rem;
 }
 
 .detail_title{
 
 }
+#container{
+position: relative;
+}
+
+

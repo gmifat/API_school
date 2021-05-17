@@ -8,57 +8,89 @@
             <span class="detail_value fw-bold">{{ class_info[0][1] }}</span>
         </div>
         <hr>
-        <table class="table table-striped" id="class_session_table">
+        {{ class_session_to_update }}
+        <table class="table table-striped px-1" id="class_session_table">
             <thead>
-                <th>Lundi</th>
-                <th>Mardi</th>
-                <th>Mercredi</th>
-                <th>Jeudi</th>
-                <th>Vendredi</th>
-                <th>Samedi</th>
-                <th>Dimanche</th>
+                <tr>
+                    <th>Lundi</th>
+                    <th>Mardi</th>
+                    <th>Mercredi</th>
+                    <th>Jeudi</th>
+                    <th>Vendredi</th>
+                    <th>Samedi</th>
+                    <th>Dimanche</th>
+                </tr>
             </thead>
             <tbody>
-                {% for day in ('Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche') %}
-                    <td>
-                        {% for class_session in class_sessions[day] %}
-                            <div class="card">
-                                  <h5 class="card-header">{{class_session[4]}} - {{class_session[5]}}</h5>
-                                  <div class="card-body">
-                                      <h5 class="card-title">{{class_session[8]}} {{class_session[9]}}</h5>
-                                      <p class="card-text">{{class_session[11]}}</p>
-                                  {% if class_session[12] is not none %}
-                                      <a href="#" class="card-link">
-                                          <i class="fas fa-school fa-lg me-2"></i>{{class_session[13]}}
-                                      </a>
-                                  {% else %}
-                                      <span class="me-2"><i class="fas fa-school fa-lg me-2"></i>---</span>
-                                  {% endif %}
-                                      <hr>
-                                  {% if class_session[6] is not none and class_session[6]|length %}
-                                      <a href="#" class="card-link">
-                                          <i class="fas fa-globe fa-lg me-2"></i>{{class_session[6]}}
-                                      </a>
-                                   {% else %}
-                                      <span><i class="fas fa-globe fa-lg me-2"></i>---</span>
-                                  {% endif %}
-                                  </div>
-                            </div>
-                        {% endfor %}
-                    </td>
-                {% endfor %}
+                <tr>
+                    {% for day in ('Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche') %}
+                        <td>
+                            {% for class_session in class_sessions[day] %}
+                                {% if class_session_to_update is defined and class_session_to_update[0] == class_session[0] %}
+                                <div class="card mb-3 bg-warning">
+                                {% else %}
+                                <div class="card mb-3">
+                                {% endif %}
+                                    <div class="card-header pe-0">
+                                        <span class="">
+                                            {{class_session[4]}} - {{class_session[5]}}
+                                        </span>
+                                        <a href="{{url_for('get_class_sessions_to_update',
+                                        class_session_id=class_session[0], class_id=class_info[0][0])}}" class="">
+                                            <i class="fas fa-pen"></i></a>
+                                        <a href="{{class_session[6]}}" class="">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{class_session[8]}} {{class_session[9]}}</h6>
+                                        <p class="card-text">{{class_session[11]}}</p>
+                                        {% if class_session[12] is not none %}
+                                            <a href="#" class="card-link">
+                                                <i class="fas fa-school me-2"></i>{{class_session[13]}}
+                                            </a>
+                                        {% else %}
+                                            <span class="me-2"><i class="fas fa-school me-2"></i>---</span>
+                                        {% endif %}
+                                        <hr class="my-2">
+                                        {% if class_session[6] is not none and class_session[6]|length %}
+                                            <a href="{{class_session[6]}}" class="card-link">
+                                                 <i class="fas fa-globe me-2"></i> Lien
+                                            </a>
+                                        {% else %}
+                                            <span><i class="fas fa-globe me-2"></i>---</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </td>
+                    {% endfor %}
+                </tr>
             </tbody>
         </table>
         <hr>
-        <h2>Programmer un cours</h2>
-        <form action="{{ url_for('add_class_sessions')}}" method="post" class="row g-3 needs-validation">
+
+        {% if class_session_to_update is defined %}
+            <h2>Modifier un cours</h2>
+            <form action="{{ url_for('update_class_sessions')}}" method="post" class="row g-3 needs-validation">
+                <input name="class_session_id" id="class_session_id" type="hidden" value="{{ class_session_to_update[0] }}">
+        {% else %}
+            <h2>Programmer un cours</h2>
+            <form action="{{ url_for('add_class_sessions')}}" method="post" class="row g-3 needs-validation">
+        {% endif %}
             <input name="class_id" id="class_id" type="hidden" value="{{ class_info[0][0] }}">
             <div class="col-md-6">
                 <label for="class_subject_id" class="form-label">Matière</label>
                 <select name="class_subject_id" id="class_subject_id" class="form-select">
                     <option value="">Choisir ...</option>
                     {% for ci in class_info %}
-                        <option data-subject="{{ ci[2] }}" value="{{ ci[4] }}">{{ ci[3] }}</option>
+                        {% if class_session_to_update is defined and class_session_to_update[10] == ci[2] %}
+                            <option selected data-subject="{{ ci[2] }}" value="{{ ci[4] }}">{{ ci[3] }}</option>
+                        {% else %}
+                            <option data-subject="{{ ci[2] }}" value="{{ ci[4] }}">{{ ci[3] }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
@@ -67,7 +99,13 @@
                 <select name="speciality_id" id="speciality_id" class="form-select">
                     <option value="">Choisir ...</option>
                     {% for ti in teacher_info %}
-                        <option data-subject="{{ ti[4] }}" value="{{ ti[0] }}">{{ ti[2] }} {{ ti[3] }}</option>
+                        {% if class_session_to_update is defined and class_session_to_update[7] == ti[1] and class_session_to_update[10] == ti[4] %}
+                            <option selected data-subject="{{ ti[4] }}" value="{{ ti[0] }}">{{ ti[2] }} {{ ti[3] }}</option>
+                        {% elif class_session_to_update is defined and class_session_to_update[10] == ti[4] %}
+                            <option data-subject="{{ ti[4] }}" value="{{ ti[0] }}">{{ ti[2] }} {{ ti[3] }}</option>
+                        {% else %}
+                            <option data-subject="{{ ti[4] }}" value="{{ ti[0] }}" style="display: none;">{{ ti[2] }} {{ ti[3] }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
@@ -75,36 +113,46 @@
                 <label for="day" class="form-label">Jour</label>
                 <select name="day" id="day" class="form-select">
                     {% for day in ('Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche') %}
-                        <option value="{{ day }}">{{ day }}</option>
+                        {% if class_session_to_update is defined and class_session_to_update[3] == day %}
+                            <option selected value="{{ day }}">{{ day }}</option>
+                        {% else %}
+                            <option value="{{ day }}">{{ day }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
             <div class="col-md-4">
                 <label for="start_time" class="form-label">Heure début</label>
-                <input name="start_time" id="start_time" type="time" class="form-control">
+                <input name="start_time" id="start_time" type="time" class="form-control"
+                       value="{{class_session_to_update[4] if class_session_to_update is defined else ''}}">
             </div>
             <div class="col-md-4">
                 <label for="end_time" class="form-label">Heure de fin</label>
-                <input name="end_time" id="end_time" type="time" class="form-control">
+                <input name="end_time" id="end_time" type="time" class="form-control"
+                value="{{class_session_to_update[5] if class_session_to_update is defined else ''}}">
             </div>
             <div class="col-md-4">
             <label for="classroom_id" class="form-label">Salle</label>
             <select name="classroom_id" id="classroom_id" class="form-select">
-                <option value="">Choisir ... </option>
+                <option value="no_classroom">Choisir ... </option>
                 {% for classroom in classrooms %}
-                    <option value="{{ classroom[0] }}">{{ classroom[1] }}</option>
+                    {% if class_session_to_update is defined and class_session_to_update[12] == classroom[0] %}
+                        <option selected value="{{ classroom[0] }}">{{ classroom[1] }}</option>
+                    {% else %}
+                        <option value="{{ classroom[0] }}">{{ classroom[1] }}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
             </div>
             <div class="col-md-8">
                 <label for="videoconference" class="form-label">Visio conférence</label>
-                <input name="videoconference" id="videoconference" type="text" class="form-control">
+                <input name="videoconference" id="videoconference" type="text" class="form-control"
+                       value="{{class_session_to_update[6] if class_session_to_update is defined else ''}}">
             </div>
              <div class="col-12">
                 <button class="btn btn-primary" type="submit">Valider</button>
              </div>
         </form>
-
     </article>
 <script>
 	$('#class_subject_id').on('change', function() {
