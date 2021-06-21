@@ -8,7 +8,6 @@
             <span class="detail_value fw-bold">{{ class_info[0][1] }}</span>
         </div>
         <hr>
-        {{ class_session_to_update }}
         <table class="table table-striped px-1" id="class_session_table">
             <thead>
                 <tr>
@@ -38,7 +37,7 @@
                                         <a href="{{url_for('get_class_sessions_to_update',
                                         class_session_id=class_session[0], class_id=class_info[0][0])}}" class="">
                                             <i class="fas fa-pen"></i></a>
-                                        <a href="{{class_session[6]}}" class="">
+                                        <a class="disabled text-muted">
                                             <i class="fas fa-times"></i>
                                         </a>
 

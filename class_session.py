@@ -129,9 +129,30 @@ def get_class_sessions_to_update(class_id, class_session_id):
 
 @app.route('/class_sessions/update', methods=['POST'])
 def update_class_sessions():
-    #school_cursor = school_db.cursor()
-    #school_cursor.execute("select ")
-    return redirect()
+    cl_id = request.form['class_session_id']
+    classroom_id = request.form['classroom_id']
+    if classroom_id == 'no_classroom':
+        classroom_id = None
+    class_session = {'cl_speciality_id': request.form['speciality_id'],
+                     'cl_class_subject_id': request.form['class_subject_id'],
+                     'cl_day': request.form['day'],
+                     'cl_classroom_id': request.form['classroom_id'],
+                     'cl_start_time': request.form['start_time'],
+                     'cl_end_time': request.form['end_time'],
+                     'cl_link': request.form['videoconference'],
+                     'v_id': cl_id}
+
+    school_cursor = school_db.cursor()
+    school_cursor.execute("update class_session set class_subject_id = %(cl_class_subject_id)s,"
+                          " speciality_id = %(cl_speciality_id)s,"
+                          " classroom_id = %(cl_classroom_id)s,"
+                          " day = %(cl_day)s, start_time = %(cl_start_time)s,"
+                          " end_time = %(cl_end_time)s, videoconference = %(cl_link)s"
+                          " where class_session_id = %(v_id)s", class_session)
+
+    school_db.commit()
+    school_cursor.close()
+    return redirect("/class_sessions/"+request.form['class_id'])
 
 
 @app.route('/class_sessions/delete/<class_session_id>', methods=['GET'])
